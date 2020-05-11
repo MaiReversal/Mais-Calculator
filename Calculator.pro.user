@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.11.0, 2020-05-11T21:37:34. -->
+<!-- Written by QtCreator 4.11.0, 2020-05-11T21:55:51. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -287,8 +287,9 @@
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:D:/qtcode/Calculator/Calculator.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">D:/qtcode/Calculator/Calculator.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Calculator2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:C:/Users/围城/Desktop/project/Calculator/Mais-Calculator/Calculator.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">C:/Users/围城/Desktop/project/Calculator/Mais-Calculator/Calculator.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="bool" key="RunConfiguration.Arguments.multi">false</value>
     <value type="QString" key="RunConfiguration.OverrideDebuggerStartup"></value>
