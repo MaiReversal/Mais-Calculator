@@ -38,9 +38,10 @@ public:
     double AND(double& x, double& y);            //按位与
     double OR(double& x, double& y);             //按位或
     double NOT(double x);                      //按位非
+    string tftocr(string& str) ;//turn from to complement representation
 
 
-private slots:
+public slots:
 
     void on_num0_clicked();
 
@@ -97,6 +98,7 @@ private slots:
     void on_factorial_clicked();
 
     void on_power_clicked();
+
 private:
     Ui::MainWindow* ui;
     string str;

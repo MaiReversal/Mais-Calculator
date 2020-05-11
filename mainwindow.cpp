@@ -4,6 +4,7 @@
 #include <cstring>
 #include <QString>
 #include <stack>
+#include <conio.h>
 using namespace std;
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -78,16 +79,40 @@ string MainWindow::infixtopostfix()
 string MainWindow::dectobin(double& x)
 {
     string temp;
-    int i = x, j = 0;
+    bool positive;
+    int i;
     int a[100] = { 0 };
+    if(x > 0)
+    {
+        i = x;
+        positive = true;
+    }
+    else
+    {
+        i = -x;
+        positive = false;
+    }
+    int j = 0;
     while (i != 0)
     {
         a[j] = i % 2;
         i /= 2;
         j++;
     }
-    while (j--)
-        temp += to_string(a[j]);
+    if(positive)
+        a[j] = 0;
+    else
+        a[j] = 1;
+    if(x != 0)
+    {
+        for(int z = j; z >= 0; z--)
+            temp += to_string(a[z]);
+    }
+    else
+    {
+      temp = "0";
+
+    }
     return temp;
 }
 double MainWindow::compute(string str, double* bit)//根据后缀算术表达式计算值
@@ -248,53 +273,52 @@ double MainWindow::factorial(double a)                    //阶乘运算的函�
 }
 double MainWindow::AND(double& x, double& y)
 {
-    if (x >= 0 && y >= 0)
-    {
         string a = dectobin(x);
         string b = dectobin(y);
+        a = tftocr(a);
+        b = tftocr(b);
         extended(a, b);
         string ans;
         double temp = 0;
         for (unsigned int i = 0; i < a.size(); i++)
-        {
-            (a[i] == '1' && b[i] == '1') ? ans += '1' : ans += '0';
-        }
-        for (double i = ans.size(), j = 0; i > 0; i--)
+        (a[i] == '1' && b[i] == '1') ? ans += '1' : ans += '0';
+        ans = tftocr(ans);
+        for (double i = ans.size(), j = 0; i > 1; i--)
         {
             temp += (ans[i - 1] - '0') * power(2, j);
             j++;
         }
+        if(ans[0] == '1')
+        {
+            temp *= -1;
+            temp--;
+        }
         return temp;
-    }
-    else
-    {
-        empty = true;
-        return 0;
-    }
 }
 double MainWindow::OR(double& x, double& y)
 {
-    if (x >= 0 && y >= 0)
-    {
         string a = dectobin(x);
-        string b = dectobin(y);
+        string b = dectobin(y);//获得原码
+        a = tftocr(a);
+        b = tftocr(b);
         extended(a, b);
         string ans;
         double temp = 0;
         for (unsigned int i = 0; i < a.size(); i++)
-        {
-            (a[i] == '1' || b[i] == '1') ? ans += '1' : ans += '0';
-        }
-        for (double i = ans.size(), j = 0; i > 0; i--)
+        (a[i] == '1' || b[i] == '1') ? ans += '1' : ans += '0';
+        ans = tftocr(ans);
+        for (double i = ans.size(), j = 0; i > 1; i--)
         {
             temp += (ans[i - 1] - '0') * power(2, j);
             j++;
         }
+        if(ans[0] == '1')
+        {
+            temp *= -1;
+            temp--;
+        }
         return temp;
-    }
 
-    else
-        return 0;
 }
 double MainWindow::NOT(double x)
 {
@@ -333,7 +357,7 @@ bool MainWindow::priority(char a, char b)
         return true;
     if (((a == '*') || (a == '/')) && temp)       //这+-*/(这五个运算符中显然*/优先级最高
         return true;
-    if (((a != '+') && (a != '-') && (a != '*') && (a != '/'))) //显然，幂运算和阶乘运算优先级最高
+    if (((a != '+') && (a != '-') && (a != '*') && (a != '/')) && b != '@') //显然，幂运算和阶乘运算优先级最高
         return true;
     else
         return false;
@@ -431,7 +455,8 @@ void MainWindow::extended(string& a, string& b)
         double temp = a.size() - b.size();
         string::iterator it;
         it = b.begin();
-        b.insert(it, temp, '0');
+        b.insert(it, temp, b[0]);
+
 
     }
     else
@@ -439,7 +464,7 @@ void MainWindow::extended(string& a, string& b)
         double temp = b.size() - a.size();
         string::iterator it;
         it = a.begin();
-        a.insert(it, temp, '0');
+        a.insert(it, temp, a[0]);
     }
 }
 void MainWindow::on_num0_clicked()
@@ -447,10 +472,8 @@ void MainWindow::on_num0_clicked()
     str += '0';
     str1 += '0';
     status += '1';
-
     QString temp = QString::fromStdString(str1);
     ui->textEdit->setText(temp);
-
 }
 void MainWindow::on_num1_clicked()
 {
@@ -769,4 +792,25 @@ bool MainWindow::errorcheck()
     else
        return false;
 }
+string MainWindow::tftocr(string &str)
+{
 
+    if(str[0] == '0')
+        return str;
+    for(unsigned int i = 0; i < str.size(); i++)
+    {
+        (str[i] == '0') ? str[i] = '1' : str[i] = '0';
+    }
+    int size = str.size() - 1;
+     if(str[size] == '0')
+        str[size] = '1';
+     else
+        str[size] = '2';
+     while(str[size] == '2' && size >= 0)
+     {
+         str[size] = '0';
+         size--;
+         (str[size] == '0') ? str[size] = '1' : str[size] = '2';
+     }
+     return str;
+}
