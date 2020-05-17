@@ -351,11 +351,11 @@ bool MainWindow::logicnot(double& x)
 
 bool MainWindow::priority(char a, char b)
 {   //由于右圆括号不入栈，故栈中最多有+-*/(!^五种符号(可能与中文冲突的阶乘和括号已事先处理)
-    bool temp = (b == '+' || b == '-' || b == '*' || b == '/');//临时的变量，表示b是+-*/中的一个
+    //bool temp = (b == '+' || b == '-' || b == '*' || b == '/' || b =='(');//临时的变量，表示b是+-*/中的一个
     //算术优先级a>b 返回true
     if (((a == '+') || (a == '-')) && (b == '('))//由于(括号优先级最低故单独讨论
         return true;
-    if (((a == '*') || (a == '/')) && temp)       //这+-*/(这五个运算符中显然*/优先级最高
+    if (((a == '*') || (a == '/')) && (b=='+' || b=='-'))//temp)       //这+-*/(这五个运算符中显然*/优先级最高
         return true;
     if (((a != '+') && (a != '-') && (a != '*') && (a != '/')) && b != '@') //显然，幂运算和阶乘运算优先级最高
         return true;
@@ -730,7 +730,7 @@ void MainWindow::on_equal_clicked()
     if (!bracketbnum())
     {
         reset();
-        ui->textEdit->setText("Bracket pairing errorr");
+        ui->textEdit->  setText("Bracket pairing error");
         return;
     }
     if(errorcheck())
@@ -745,7 +745,7 @@ void MainWindow::on_equal_clicked()
         double bit[10] = { 0 };           //记录数字位数用
         definite_digit(bit);
         string str2 = infixtopostfix();//改写的后缀表达式
-        int64_t n = compute(str2, bit);
+        double n = compute(str2, bit);
         if (flag)
         {
             reset();
