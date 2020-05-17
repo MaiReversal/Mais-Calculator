@@ -790,7 +790,17 @@ bool MainWindow::errorcheck()
         }
     }
     else
-       return false;
+        {
+        char s = str.back();
+        str.pop_back();
+        if(errorcheck())
+            return false;
+        else
+        {
+            str.push_back(s);
+            return true;
+        }
+    }
 }
 string MainWindow::tftocr(string &str)
 {
